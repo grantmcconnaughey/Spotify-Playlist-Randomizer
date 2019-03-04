@@ -1,2 +1,2 @@
 schedule
-spotipy
+git+ssh://git@github.com/plamere/spotipy.git

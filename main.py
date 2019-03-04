@@ -1,4 +1,5 @@
 import logging
+import os
 import random
 import time
 
@@ -8,6 +9,7 @@ import spotipy.util as util
 
 
 logger = logging.getLogger('spotify_playlist_randomizer')
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 
 class SpotifyPlaylistRandomizer(object):
@@ -44,7 +46,12 @@ class SpotifyPlaylistRandomizer(object):
 
     def _get_token(self):
         scope = 'playlist-modify-private'
-        return util.prompt_for_user_token(self.username, scope)
+        cached_creds_file = os.path.join(current_directory, '.creds.json')
+        return util.prompt_for_user_token(
+            self.username,
+            scope,
+            cache_path=cached_creds_file
+        )
 
     def _get_playlist_track_ids(self, playlist_id):
         track_ids = []
